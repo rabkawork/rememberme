@@ -51,7 +51,7 @@
         ],  
     });
     $("#addnewitems").click(function(){
-        $(".modal").modal('show');
+        $("#newItemsModal").modal('show');
         return false;
     });
 
@@ -59,7 +59,7 @@
     function setLocation(id)
     {
         $("#locationId").val(id);
-        $(".updateLocationItems").modal('show');
+        $("#updateLocationItems").modal('show');
         return false;
     }
 
@@ -143,7 +143,7 @@
 
 </script>
 
-<div class="modal fade updateLocationItems" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade " id="updateLocationItems" tabindex="-1"  aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -180,7 +180,7 @@
 </div>
 
 
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal" id="newItemsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
