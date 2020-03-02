@@ -28,7 +28,7 @@ class ItemsController extends Controller
         foreach ($data['data'] as $key => $value) {
             $data['data'][$key]->no = ++$start;
             $id   = $data['data'][$key]->id;
-            $menu = '<a href="#" class="btn btn-outline-primary btn-sm">Edit</a> <a onclick="removeItems('.$id.');" class="btn btn-outline-danger btn-sm">Remove</a>';
+            $menu = '<a onclick="setLocation('.$id.');" class="btn btn-outline-primary btn-sm">Update Location</a> <a onclick="removeItems('.$id.');" class="btn btn-outline-danger btn-sm">Remove</a>';
             $data['data'][$key]->view = $menu;
         }
 
@@ -64,7 +64,7 @@ class ItemsController extends Controller
                 $data['created_at']       = $today;
                 $data['items_history_id'] = 0;
                 $id = DB::table('items')->insertGetId($data);
-                return response()->json(['msg' => 'sukses', 'data' => $data, 'code' => $this->successStatus], $this->successStatus);
+                return response()->json(['msg' => 'success', 'data' => $data, 'code' => $this->successStatus], $this->successStatus);
             }
             return response()->json($request, 200);
         } catch (Exception $e) {
@@ -86,10 +86,14 @@ class ItemsController extends Controller
             } else {
                 $date               = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
                 $today              = $date->format('Y_m_d_H_i_s');
-                $data['name']       = $request->name;
+                $data['location']   = $request->name;
                 $data['created_at'] = $today;
                 $id = DB::table('items_history')->insertGetId($data);
-                return response()->json(['msg' => 'sukses', 'data' => $data, 'code' => $this->successStatus], $this->successStatus);
+
+                $update['items_history_id'] = $id;
+                DB::table('items')->where('id', $request->id)->update($update);
+
+                return response()->json(['msg' => 'success', 'data' => $data, 'code' => $this->successStatus], $this->successStatus);
             }
             return response()->json($request, 200);
         } catch (Exception $e) {
@@ -109,7 +113,7 @@ class ItemsController extends Controller
                 return response()->json(['msg' => 'Invalid API', 'data' => $validator->errors(), 'code' => 400], 200);
             } else {
                 $id = DB::table('items')->where('id', $request->id)->delete();
-                return response()->json(['msg' => 'sukses', 'data' => [], 'code' => $this->successStatus], $this->successStatus);
+                return response()->json(['msg' => 'success', 'data' => [], 'code' => $this->successStatus], $this->successStatus);
             }
         } catch (Exception $e) {
             return response()->json(['msg' => 'Invalid API', 'data' => $validator->errors(), 'code' => 400], 200);

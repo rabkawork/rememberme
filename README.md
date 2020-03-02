@@ -1,3 +1,8 @@
+## Explanation
+
+I wrote this project to make a lists the location of goods in house
+
+
 ## How to install this project
 1. Composer Install
 2. Edit .env -> using your database
@@ -7,4 +12,3 @@
 ## Author
 
 This code original by rabkawork@gmail.com
-

@@ -12,7 +12,7 @@
                     <th>Name</th>
                     <th>Last Location</th>
                     <th>Date</th>
-                    <th>Aksi</th>
+                    <th>Action</th>
                 </tr>
             </thead>
         </table>
@@ -55,6 +55,43 @@
         return false;
     });
 
+
+    function setLocation(id)
+    {
+        $("#locationId").val(id);
+        $(".updateLocationItems").modal('show');
+        return false;
+    }
+
+    function saveLatestLocation()
+    {
+        $.ajax({
+            url: "{{route('items.updateHistory')}}",
+            type: "post",
+            data: "_token="+$('input[name="_token"]').val()+"&name="+$('#itemsLocation').val()+"&id="+$('#locationId').val(),
+            success: function (response) {
+               if (response.msg == "Invalid API") {
+                    $('.error').html('');
+                    for (var error in response.data) {
+                        $('.error').append('<li ><span style="color:red;"> The Name of location field is required</span> </li>');
+                    }
+               }
+               
+               if (response.msg == "success") {
+                    alert('Newest location has been updated');
+                    table.ajax.reload( null, false );
+                    $(".modal").modal('hide');
+               }
+    
+               return false;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+               console.log(textStatus, errorThrown);
+            }
+        });
+       return false; 
+    }
+
     function removeItems(id){
         var retVal = confirm("Are you sure to remove this item ?");
         if( retVal == true ){
@@ -88,7 +125,7 @@
                     }
                }
                
-               if (response.msg == "sukses") {
+               if (response.msg == "success") {
                     alert('New items has been added');
                     table.ajax.reload( null, false );
                     $(".modal").modal('hide');
@@ -105,6 +142,42 @@
 
 
 </script>
+
+<div class="modal fade updateLocationItems" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Set Latest Location the item</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+            <div class="modal-body">
+                <form>
+                    {{ csrf_field()}}
+                    <div class="form-group">
+                        <ul style="" class="error">
+
+                        </ul>
+                    </div>
+                    <div class="form-group" style="display:none;">
+                         {{ csrf_field()}}
+                        <input type="text" class="form-control" id="locationId" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Items Location">Latest Location (Name of item location)</label>
+                        <input type="text" class="form-control" id="itemsLocation" placeholder="Name of item location">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveItems" onclick="saveLatestLocation();">Update</button>
+                <a class="btn btn-secondary" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="modal" tabindex="-1" role="dialog">

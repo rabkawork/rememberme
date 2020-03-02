@@ -18,5 +18,5 @@ Route::get('/', function () {
 // Route::get('/', 'ItemsController@index')->name('items.index');
 Route::any('data', 'ItemsController@data')->name('items.data');
 Route::any('add', 'ItemsController@add')->name('items.add');
-Route::any('updateHistory/{id}', 'ItemsController@updateHistory')->name('items.updateHistory');
+Route::any('updateHistory', 'ItemsController@updateHistory')->name('items.updateHistory');
 Route::any('deleteItems', 'ItemsController@deleteItems')->name('items.delete');
