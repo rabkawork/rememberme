@@ -9,7 +9,7 @@ class Items extends Model
 {
     protected $table = 'items';
 
-    protected $fields = ['items.id', 'items.name'];
+    protected $fields = ['items.id', 'items.name', 'items_history.location', 'items_history.created_at'];
 
     public function dataTable($search, $length, $start, $orderField, $orderStatus)
     {
@@ -50,7 +50,7 @@ class Items extends Model
             $whereLike .= '';
         }
 
-        $json['sql']       = DB::select("select items.id, items.name, items_history.location, items_history.created_at
+        $json['data']       = DB::select("select items.id, items.name, items_history.location, items_history.created_at
                             from items LEFT JOIN items_history ON items.items_history_id = items_history.id " . $whereLike . $order . $limit);
         $json['count']     = DB::select("select count(*) as count from items LEFT JOIN items_history ON items.items_history_id = items_history.id " . $whereLike);
         return $json;
