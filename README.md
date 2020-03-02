@@ -1,6 +1,6 @@
 ## Explanation
 
-I wrote this project to make a lists the location of goods in house
+I wrote this project to make a lists the location of goods in the house
 
 
 ## How to install this project
