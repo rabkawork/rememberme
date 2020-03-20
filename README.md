@@ -12,3 +12,11 @@ I wrote this project to make a lists the location of goods in the house
 ## Author
 
 This code original by rabkawork@gmail.com
+
+
+## Programming
+
+PHP Laravel 6
+MySQL (Database)
+Jquery (Javascript)
+
